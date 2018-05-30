@@ -2,6 +2,7 @@ import fresh_tomatoes
 import media
 import http.client
 import json
+from datetime import datetime
 
 
 # Info for API requests
@@ -41,13 +42,14 @@ def get_movies_list(list_id):
     for i in movies_list:
         # Get required info for Movie class
         title = i["title"]
-        storyline = i["overview"]
         tmdb_poster_link = "https://image.tmdb.org/t/p/w600_and_h900_bestv2"
         poster_image_url = tmdb_poster_link + i['poster_path']
         youtube_url = get_trailer_link(i["id"])
+        rating = i["vote_average"]
+        year = datetime.strptime(i["release_date"], '%Y-%m-%d').year
 
         # Create new movie instance and add it to my_list
-        movie = media.Movie(title, storyline, poster_image_url, youtube_url, rating, year)
+        movie = media.Movie(title, poster_image_url, youtube_url, rating, year)
         my_list.append(movie)
 
 # List to store movie instances
